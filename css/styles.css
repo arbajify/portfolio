@@ -1,0 +1,424 @@
+/* ==========================================================================
+   Arbaj Ahmad — Heritage Espresso 3D Portfolio Stylesheet
+   Palette: Deep Roasted Espresso (#120e0c), Espresso Crema (#c8a276),
+            Warm Parchment (#f5efe6), Soft Cocoa Stone (#b0a396)
+   Typography: Playfair Display, Plus Jakarta Sans, JetBrains Mono
+   ========================================================================== */
+
+:root {
+  --espresso-bg: #120e0c;
+  --espresso-surface: rgba(29, 22, 18, 0.84);
+  --espresso-nav: rgba(18, 14, 12, 0.90);
+  --espresso-card-inner: rgba(20, 15, 12, 0.72);
+  --text-primary: #f5efe6;
+  --text-secondary: #c2b5a8;
+  --text-muted: #8c7d70;
+  --accent-crema: #c8a276;
+  --accent-crema-deep: #9e784f;
+  --border-subtle: rgba(200, 162, 118, 0.18);
+  --border-strong: rgba(200, 162, 118, 0.42);
+  --shadow-espresso: 0 28px 60px -18px rgba(0, 0, 0, 0.82);
+  --shadow-crema-glow: 0 20px 48px -14px rgba(200, 162, 118, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--espresso-bg);
+  color: var(--text-primary);
+  line-height: 1.72;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 75% 45% at 50% -10%, rgba(200, 162, 118, 0.09), transparent 70%),
+    radial-gradient(ellipse 55% 40% at 85% 100%, rgba(158, 120, 79, 0.06), transparent 70%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, .font-editorial {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.espresso-card {
+  background: var(--espresso-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-espresso);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.espresso-nav {
+  background: var(--espresso-nav);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.crema-text {
+  color: var(--accent-crema);
+}
+
+.espresso-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+}
+
+.btn-espresso-primary {
+  background: linear-gradient(135deg, var(--accent-crema), var(--accent-crema-deep));
+  color: #120e0c;
+  font-weight: 600;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+}
+
+.btn-espresso-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+  box-shadow: var(--shadow-crema-glow);
+}
+
+.pill-espresso {
+  border: 1px solid var(--border-subtle);
+  background: var(--espresso-card-inner);
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+}
+
+.pill-espresso:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.pill-espresso.active {
+  background: var(--accent-crema);
+  color: #120e0c !important;
+  border-color: var(--accent-crema) !important;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   3-STAGE SCROLL-DRIVEN 3D PORTRAIT CHOREOGRAPHY
+   Stage 1 (Top): 3D Portrait Front & Center
+   Stage 2 (Scroll Down): Portrait Glides to Side + Summary Appears
+   Stage 3 (Past Hero): Portrait Docks in Sidebar as 3D Circle + Full Details
+   ========================================================================== */
+
+.hero-scroll-track {
+  position: relative;
+  min-height: 145vh;
+  padding-top: 5.5rem;
+}
+
+.hero-sticky-viewport {
+  position: sticky;
+  top: 5.5rem;
+  min-height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0 3rem;
+}
+
+.hero-stage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Stage 1: Portrait Front & Center */
+.hero-stage-grid.stage-1 {
+  justify-items: center;
+}
+
+.hero-stage-grid.stage-1 .hero-portrait-col {
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+  transform: translate3d(0, 0, 0) scale(1.02);
+  transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-stage-grid.stage-1 .hero-summary-col {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translate3d(0, 26px, 0);
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.55s ease, max-height 0.55s ease;
+}
+
+/* Stage 2: Portrait Glides to Left Side, Executive Summary Reveals on Right */
+@media (min-width: 1024px) {
+  .hero-stage-grid.stage-2 {
+    grid-template-columns: 5fr 7fr;
+    gap: 4rem;
+  }
+}
+
+.hero-stage-grid.stage-2 .hero-portrait-col {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  transform: translate3d(0, 0, 0) scale(0.98);
+  transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-stage-grid.stage-2 .hero-summary-col {
+  opacity: 1;
+  max-height: 1200px;
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+  transition: opacity 0.6s ease 0.06s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), max-height 0.6s ease;
+}
+
+.hero-stage-grid.stage-2 .stage1-intro-caption {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0 !important;
+  transition: all 0.35s ease;
+}
+
+/* Stage 3: Portrait Transitions to Sidebar Circular 3D Avatar */
+@media (min-width: 1024px) {
+  .hero-stage-grid.stage-3 {
+    grid-template-columns: 5fr 7fr;
+    gap: 4rem;
+  }
+}
+
+.hero-stage-grid.stage-3 .hero-portrait-col {
+  opacity: 0.12;
+  transform: translate3d(-36px, 36px, -50px) scale(0.76);
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-stage-grid.stage-3 .hero-summary-col {
+  opacity: 1;
+  max-height: 1200px;
+  transform: translate3d(0, 0, 0);
+}
+
+.hero-stage-grid.stage-3 .stage1-intro-caption {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+/* 3D Sculptural Portrait Layers */
+.portrait-3d-perspective {
+  perspective: 1300px;
+  transform-style: preserve-3d;
+}
+
+.portrait-3d-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.portrait-depth-frame {
+  position: absolute;
+  inset: -12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 1.75rem;
+  transform: translateZ(-30px) translate(12px, 12px);
+  pointer-events: none;
+}
+
+.portrait-depth-pedestal {
+  position: absolute;
+  inset: -20px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 2rem;
+  transform: translateZ(-52px) translate(-8px, 14px);
+  pointer-events: none;
+}
+
+.portrait-photo-elevated {
+  transform: translateZ(28px);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px var(--border-strong);
+}
+
+.portrait-badge-floating {
+  transform: translateZ(52px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
+}
+
+.espresso-portrait-grade {
+  filter: contrast(1.05) brightness(0.98) saturate(0.94);
+}
+
+/* Stage 3 Sidebar 3D Circular Avatar */
+.sidebar-3d-dock {
+  opacity: 0.45;
+  transform: translateY(14px) scale(0.95);
+  transition: all 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.in-stage-3 .sidebar-3d-dock {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.circle-avatar-3d-stage {
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.circle-avatar-3d-ring {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 9999px;
+  padding: 5px;
+  background: linear-gradient(135deg, var(--accent-crema), transparent 65%, var(--accent-crema-deep));
+  box-shadow:
+    0 20px 38px -10px rgba(0, 0, 0, 0.82),
+    0 0 0 1px var(--border-strong),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.circle-avatar-3d-ring:hover {
+  transform: rotateX(8deg) rotateY(-10deg) translateZ(10px) scale(1.04);
+  box-shadow:
+    0 26px 48px -10px rgba(200, 162, 118, 0.35),
+    0 0 0 2px var(--accent-crema);
+}
+
+.circle-avatar-3d-orbit {
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  border: 1px dashed var(--border-strong);
+  transform: translateZ(-18px);
+  pointer-events: none;
+}
+
+.circle-avatar-3d-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  object-fit: cover;
+  transform: translateZ(16px);
+}
+
+/* Mobile & Tablet Compact Circular Bar in Stage 3 */
+.mobile-stage3-bar {
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+
+body.in-stage-3 .mobile-stage3-bar {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 3D Tilt Cards */
+.tilt-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  position: relative;
+}
+
+.tilt-card-3d:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-crema-glow);
+}
+
+.tilt-card-content {
+  transform: translateZ(16px);
+}
+
+.tilt-glare-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(245, 239, 230, 0.07), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tilt-card-3d:hover .tilt-glare-layer {
+  opacity: 1;
+}
+
+/* Official Technology Logo Chip */
+.tech-logo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--espresso-card-inner);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.tech-logo-chip:hover {
+  border-color: var(--accent-crema);
+  transform: translateY(-1px);
+}
+
+.tech-logo-svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1023px) {
+  .hero-scroll-track {
+    min-height: auto;
+    padding-top: 5rem;
+  }
+  .hero-sticky-viewport {
+    position: relative;
+    top: 0;
+    min-height: auto;
+    padding: 1.5rem 0 2.5rem;
+  }
+  .hero-stage-grid.stage-1 .hero-portrait-col,
+  .hero-stage-grid.stage-2 .hero-portrait-col {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-stage-grid.stage-1 .hero-portrait-col,
+  .hero-stage-grid.stage-2 .hero-portrait-col {
+    max-width: 260px;
+  }
+}

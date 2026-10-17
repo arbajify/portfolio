@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arbaj Ahmad — Software &amp; Machine Learning Engineer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen antialiased selection:bg-amber-200 selection:text-stone-950">
+
+  <!-- Toast Notification Region -->
+  <div id="toast-region" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-40 espresso-nav">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4">
+      <button type="button" data-nav-target="top" class="flex items-center gap-3.5 text-left focus:outline-none">
+        <div class="w-10 h-10 rounded-full border border-[var(--border-strong)] flex items-center justify-center font-editorial font-bold text-lg crema-text">
+          AA
+        </div>
+        <div>
+          <span class="font-editorial font-semibold text-xl tracking-tight block leading-none">Arbaj Ahmad</span>
+          <span class="font-mono-code text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)] block mt-1">B.Tech CSE • Full-Stack &amp; ML</span>
+        </div>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-8 text-sm text-[var(--text-secondary)]">
+        <button type="button" data-nav-target="summary" class="hover:text-[var(--text-primary)] transition">About</button>
+        <button type="button" data-nav-target="experience-section" class="hover:text-[var(--text-primary)] transition">Experience</button>
+        <button type="button" data-nav-target="projects-section" class="hover:text-[var(--text-primary)] transition">Projects</button>
+        <button type="button" data-nav-target="skills-section" class="hover:text-[var(--text-primary)] transition">Skills</button>
+        <button type="button" data-nav-target="education-section" class="hover:text-[var(--text-primary)] transition">Education</button>
+      </nav>
+
+      <!-- Direct "Text Me" Action -->
+      <div class="flex items-center gap-3">
+        <button type="button" data-nav-target="contact-section" class="btn-espresso-primary px-5 py-2.5 rounded-full text-xs font-mono-code uppercase tracking-wider">
+          Text Me
+        </button>
+        <button type="button" id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-full pill-espresso" aria-label="Open Navigation">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile & Tablet Compact Circular 3D Avatar Bar (Visible when scrolled into Details) -->
+    <div class="mobile-stage3-bar lg:hidden border-t border-[var(--border-subtle)] bg-[var(--espresso-nav)] px-5 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full p-0.5 border border-[var(--border-strong)] shadow-md overflow-hidden">
+          <img src="assets/me.jpg" alt="Arbaj Ahmad" class="espresso-portrait-grade w-full h-full rounded-full object-cover" />
+        </div>
+        <div>
+          <div class="font-editorial text-sm font-semibold leading-none">Arbaj Ahmad</div>
+          <div class="font-mono-code text-[10px] crema-text mt-0.5">Full-Stack &amp; ML Engineer</div>
+        </div>
+      </div>
+      <button type="button" data-nav-target="contact-section" class="font-mono-code text-[11px] underline crema-text">Text Me</button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-drawer" class="hidden lg:hidden border-t border-[var(--border-subtle)] bg-[var(--espresso-bg)] px-6 py-5 space-y-3">
+      <button type="button" data-nav-target="summary" class="block w-full text-left py-1.5 font-editorial text-lg">About &amp; Summary</button>
+      <button type="button" data-nav-target="experience-section" class="block w-full text-left py-1.5 font-editorial text-lg">Experience</button>
+      <button type="button" data-nav-target="projects-section" class="block w-full text-left py-1.5 font-editorial text-lg">Projects</button>
+      <button type="button" data-nav-target="skills-section" class="block w-full text-left py-1.5 font-editorial text-lg">Technical Skills</button>
+      <button type="button" data-nav-target="education-section" class="block w-full text-left py-1.5 font-editorial text-lg">Education &amp; Achievements</button>
+      <button type="button" data-nav-target="contact-section" class="block w-full text-left py-1.5 font-editorial text-lg crema-text">Text Me</button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO SECTION — 3-STAGE SCROLL-DRIVEN 3D PORTRAIT
+       1. Portrait appears first front & center
+       2. Upon scrolling, portrait glides to side and summary appears
+       3. Scrolling past summary, portrait docks into sidebar as a 3D circle
+       ======================================================================== -->
+  <section id="hero-scrolly-stage" class="hero-scroll-track max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="hero-sticky-viewport">
+      <div id="hero-stage-grid" class="hero-stage-grid stage-1">
+
+        <!-- 3D Sculptural Portrait Column -->
+        <div class="hero-portrait-col flex flex-col items-center">
+          <div id="hero-portrait-stage" class="portrait-3d-perspective w-full">
+            <div id="hero-portrait-card" class="portrait-3d-card espresso-card rounded-3xl p-4">
+              <div class="portrait-depth-pedestal"></div>
+              <div class="portrait-depth-frame"></div>
+
+              <div class="portrait-photo-elevated relative rounded-2xl overflow-hidden aspect-[4/5] bg-[#16110e]">
+                <img
+                  src="assets/me.jpg"
+                  alt="Arbaj Ahmad Portrait"
+                  class="espresso-portrait-grade w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/15 pointer-events-none"></div>
+              </div>
+
+              <div class="portrait-badge-floating -mt-9 mx-3 relative z-20 espresso-card rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <h2 class="font-editorial text-xl font-semibold leading-tight">Arbaj Ahmad</h2>
+                  <p class="font-mono-code text-[11px] crema-text mt-0.5">B.Tech CSE • Full-Stack &amp; ML</p>
+                </div>
+                <span class="w-9 h-9 rounded-full border border-[var(--border-strong)] flex items-center justify-center font-editorial text-sm crema-text">
+                  AA
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Initial Scroll Prompt under Centered Portrait -->
+          <div class="stage1-intro-caption text-center mt-8 space-y-3 max-w-md">
+            <h1 class="font-editorial text-3xl sm:text-4xl font-semibold">Arbaj Ahmad</h1>
+            <p class="text-xs font-mono-code uppercase tracking-[0.2em] crema-text">Scroll down to view summary &amp; portfolio ↓</p>
+          </div>
+        </div>
+
+        <!-- Executive Summary Column (Reveals beside Portrait on Scroll) -->
+        <div id="hero-summary-panel" class="hero-summary-col space-y-7">
+          <div class="space-y-3">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">Lucknow, India • Integral University ('27)</p>
+            <h2 class="font-editorial text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight">
+              Arbaj Ahmad
+            </h2>
+            <p class="font-editorial italic text-xl sm:text-2xl text-[var(--text-secondary)]">
+              Full-Stack MERN &amp; Machine Learning Developer
+            </p>
+          </div>
+
+          <p class="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+            Bachelor of Technology undergraduate in Computer Science Engineering at <strong class="text-[var(--text-primary)] font-medium">Integral University, Lucknow</strong> (Aug. 2023 – July 2027) with industry internship experience at <strong class="text-[var(--text-primary)] font-medium">Sipher Web Pvt Ltd</strong>. Focused on building scalable full-stack web applications (<strong class="text-[var(--text-primary)] font-medium">ProShop-v2</strong>), asynchronous <strong class="text-[var(--text-primary)] font-medium">Event-Driven Notification Engines</strong> with Redis &amp; BullMQ, and machine learning classification pipelines.
+          </p>
+
+          <!-- Verified Contact Links -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a href="mailto:arbajahmad1089@gmail.com" class="pill-espresso px-4 py-2 rounded-full text-xs font-mono-code flex items-center gap-2">
+              <span class="crema-text">Email:</span> arbajahmad1089@gmail.com
+            </a>
+            <a href="tel:+918318218595" class="pill-espresso px-4 py-2 rounded-full text-xs font-mono-code flex items-center gap-2">
+              <span class="crema-text">Phone:</span> +91-8318218595
+            </a>
+            <a href="https://www.linkedin.com/in/arbajahmad000" target="_blank" rel="noopener noreferrer" class="pill-espresso px-4 py-2 rounded-full text-xs font-mono-code flex items-center gap-2">
+              <span class="crema-text">LinkedIn</span> ↗
+            </a>
+            <a href="https://github.com/arbajify" target="_blank" rel="noopener noreferrer" class="pill-espresso px-4 py-2 rounded-full text-xs font-mono-code flex items-center gap-2">
+              <span class="crema-text">GitHub</span> ↗
+            </a>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 pt-3">
+            <button type="button" data-nav-target="contact-section" class="btn-espresso-primary px-7 py-3.5 rounded-full text-sm inline-flex items-center gap-2.5">
+              <span>Text Me Directly</span>
+              <span>→</span>
+            </button>
+            <button type="button" data-nav-target="projects-section" class="pill-espresso px-7 py-3.5 rounded-full text-sm font-medium">
+              Explore Projects
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="details-anchor" class="max-w-7xl mx-auto px-5 sm:px-8"><div class="espresso-divider"></div></div>
+
+  <!-- ========================================================================
+       MAIN PORTFOLIO LAYOUT: STICKY LEFT CIRCULAR 3D PORTRAIT + FULL DETAILS
+       ======================================================================== -->
+  <main id="details-main-layout" class="max-w-7xl mx-auto px-5 sm:px-8 py-20 lg:py-28">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+      <!-- Left Sticky Sidebar: 3D Circular Portrait Avatar -->
+      <aside id="sidebar-profile-rail" class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-28">
+        <div class="sidebar-3d-dock espresso-card rounded-3xl p-7 flex flex-col items-center text-center space-y-5">
+          <div class="circle-avatar-3d-stage py-1">
+            <div id="sidebar-circle-avatar-3d" class="circle-avatar-3d-ring">
+              <div class="circle-avatar-3d-orbit"></div>
+              <img
+                src="assets/me.jpg"
+                alt="Arbaj Ahmad"
+                class="espresso-portrait-grade circle-avatar-3d-img"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <h3 class="font-editorial text-2xl font-semibold">Arbaj Ahmad</h3>
+            <p class="font-mono-code text-xs crema-text">B.Tech CSE • Integral University</p>
+            <p class="font-mono-code text-[11px] text-[var(--text-muted)]">Lucknow, India</p>
+          </div>
+
+          <div class="w-full pt-4 border-t border-[var(--border-subtle)] space-y-1.5 text-left text-xs font-mono-code">
+            <button type="button" data-nav-target="experience-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>01. Experience</span><span class="crema-text">→</span>
+            </button>
+            <button type="button" data-nav-target="projects-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>02. Projects</span><span class="crema-text">→</span>
+            </button>
+            <button type="button" data-nav-target="skills-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>03. Technical Skills</span><span class="crema-text">→</span>
+            </button>
+            <button type="button" data-nav-target="education-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>04. Education</span><span class="crema-text">→</span>
+            </button>
+            <button type="button" data-nav-target="achievements-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>05. Achievements</span><span class="crema-text">→</span>
+            </button>
+            <button type="button" data-nav-target="contact-section" class="w-full py-2 px-3 rounded-xl hover:bg-stone-500/10 flex items-center justify-between transition">
+              <span>06. Text Me</span><span class="crema-text">→</span>
+            </button>
+          </div>
+
+          <div class="w-full pt-4 border-t border-[var(--border-subtle)] flex flex-col gap-2.5">
+            <button type="button" data-nav-target="contact-section" class="btn-espresso-primary w-full py-2.5 rounded-full text-xs font-mono-code uppercase tracking-wider">
+              Text Me
+            </button>
+            <div class="flex items-center justify-center gap-4 pt-1 text-xs font-mono-code text-[var(--text-secondary)]">
+              <a href="https://github.com/arbajify" target="_blank" rel="noopener noreferrer" class="hover:underline">GitHub ↗</a>
+              <span>•</span>
+              <a href="https://www.linkedin.com/in/arbajahmad000" target="_blank" rel="noopener noreferrer" class="hover:underline">LinkedIn ↗</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Main Content Column -->
+      <div class="lg:col-span-8 xl:col-span-9 space-y-24">
+
+        <!-- 01. EXPERIENCE -->
+        <section id="experience-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">01 / Experience</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Industry Internship</h2>
+          </div>
+          <div id="experience-list" class="space-y-6"></div>
+        </section>
+
+        <div class="espresso-divider"></div>
+
+        <!-- 02. PROJECTS -->
+        <section id="projects-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">02 / Selected Works</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Projects</h2>
+          </div>
+          <div id="projects-grid" class="grid grid-cols-1 gap-8"></div>
+        </section>
+
+        <div class="espresso-divider"></div>
+
+        <!-- 03. TECHNICAL SKILLS -->
+        <section id="skills-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">03 / Technical Stack</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Skills &amp; Technologies</h2>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button type="button" data-skill-filter="All" class="pill-espresso active px-4 py-1.5 rounded-full text-xs font-mono-code">All</button>
+            <button type="button" data-skill-filter="Languages" class="pill-espresso px-4 py-1.5 rounded-full text-xs font-mono-code">Languages</button>
+            <button type="button" data-skill-filter="Frameworks" class="pill-espresso px-4 py-1.5 rounded-full text-xs font-mono-code">Frameworks</button>
+            <button type="button" data-skill-filter="Developer Tools" class="pill-espresso px-4 py-1.5 rounded-full text-xs font-mono-code">Developer Tools</button>
+            <button type="button" data-skill-filter="Libraries" class="pill-espresso px-4 py-1.5 rounded-full text-xs font-mono-code">Libraries</button>
+          </div>
+
+          <div id="skills-logo-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+        </section>
+
+        <div class="espresso-divider"></div>
+
+        <!-- 04. EDUCATION -->
+        <section id="education-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">04 / Academic Background</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Education</h2>
+          </div>
+          <div id="education-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <div class="espresso-divider"></div>
+
+        <!-- 05. ACHIEVEMENTS -->
+        <section id="achievements-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">05 / Milestones</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Achievements</h2>
+          </div>
+          <div id="achievements-list"></div>
+        </section>
+
+        <div class="espresso-divider"></div>
+
+        <!-- 06. TEXT ME / DIRECT EMAIL DISPATCH -->
+        <section id="contact-section" class="space-y-8 scroll-mt-28">
+          <div class="space-y-2">
+            <p class="font-mono-code text-xs uppercase tracking-[0.25em] crema-text">06 / Direct Contact</p>
+            <h2 class="font-editorial text-3xl sm:text-4xl font-semibold">Text Me</h2>
+            <p class="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl">
+              Send a message below and it will be delivered directly to my inbox (<a href="mailto:arbajahmad1089@gmail.com" class="crema-text underline">arbajahmad1089@gmail.com</a>).
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div class="md:col-span-7 espresso-card rounded-3xl p-7 sm:p-9 space-y-5">
+              <form id="portfolio-contact-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="contact-name" class="block font-mono-code text-xs uppercase text-[var(--text-muted)] mb-1.5">Your Name *</label>
+                    <input id="contact-name" name="name" type="text" required placeholder="Your Name" class="w-full px-4 py-3 rounded-xl bg-[#140f0c] border border-[var(--border-subtle)] text-sm focus:outline-none focus:border-[var(--accent-crema)]" />
+                  </div>
+                  <div>
+                    <label for="contact-email" class="block font-mono-code text-xs uppercase text-[var(--text-muted)] mb-1.5">Your Email *</label>
+                    <input id="contact-email" name="email" type="email" required placeholder="you@example.com" class="w-full px-4 py-3 rounded-xl bg-[#140f0c] border border-[var(--border-subtle)] text-sm focus:outline-none focus:border-[var(--accent-crema)]" />
+                  </div>
+                </div>
+                <div>
+                  <label for="contact-subject" class="block font-mono-code text-xs uppercase text-[var(--text-muted)] mb-1.5">Subject *</label>
+                  <input id="contact-subject" name="subject" type="text" required placeholder="Engineering Opportunity / Collaboration" class="w-full px-4 py-3 rounded-xl bg-[#140f0c] border border-[var(--border-subtle)] text-sm focus:outline-none focus:border-[var(--accent-crema)]" />
+                </div>
+                <div>
+                  <label for="contact-message" class="block font-mono-code text-xs uppercase text-[var(--text-muted)] mb-1.5">Message *</label>
+                  <textarea id="contact-message" name="message" rows="4" required placeholder="Hi Arbaj, I'd love to connect..." class="w-full px-4 py-3 rounded-xl bg-[#140f0c] border border-[var(--border-subtle)] text-sm focus:outline-none focus:border-[var(--accent-crema)]"></textarea>
+                </div>
+                <button id="text-me-submit-btn" type="submit" class="btn-espresso-primary px-8 py-3.5 rounded-full text-sm inline-flex items-center gap-2">
+                  <span>Text Me — Send to My Email</span>
+                  <span>→</span>
+                </button>
+              </form>
+
+              <div id="email-delivery-status" class="hidden pt-2"></div>
+            </div>
+
+            <div class="md:col-span-5 espresso-card rounded-3xl p-7 sm:p-8 flex flex-col justify-between space-y-6">
+              <div class="space-y-4">
+                <div class="font-mono-code text-xs uppercase tracking-widest crema-text">Direct Channels</div>
+                <h3 class="font-editorial text-2xl font-semibold">Arbaj Ahmad</h3>
+                <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+                  B.Tech CSE at Integral University • Lucknow, Uttar Pradesh, India
+                </p>
+                <div class="space-y-3 pt-2 text-xs font-mono-code">
+                  <div>
+                    <span class="text-[var(--text-muted)] block uppercase text-[10px]">Email</span>
+                    <a href="mailto:arbajahmad1089@gmail.com" class="crema-text hover:underline text-sm">arbajahmad1089@gmail.com</a>
+                  </div>
+                  <div>
+                    <span class="text-[var(--text-muted)] block uppercase text-[10px]">Phone</span>
+                    <a href="tel:+918318218595" class="crema-text hover:underline text-sm">+91-8318218595</a>
+                  </div>
+                  <div>
+                    <span class="text-[var(--text-muted)] block uppercase text-[10px]">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/arbajahmad000" target="_blank" rel="noopener noreferrer" class="crema-text hover:underline">linkedin.com/in/arbajahmad000 ↗</a>
+                  </div>
+                  <div>
+                    <span class="text-[var(--text-muted)] block uppercase text-[10px]">GitHub</span>
+                    <a href="https://github.com/arbajify" target="_blank" rel="noopener noreferrer" class="crema-text hover:underline">github.com/arbajify ↗</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-[var(--border-subtle)]">
+                <a href="mailto:arbajahmad1089@gmail.com?subject=Hello%20Arbaj%20Ahmad" class="pill-espresso w-full py-3 rounded-full text-xs font-mono-code uppercase tracking-wider flex items-center justify-center gap-2">
+                  <span>Open Email App Directly</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
